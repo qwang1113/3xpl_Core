@@ -437,6 +437,18 @@ elseif ($chosen_option === 'M')
                     usleep(250000);
                     goto back;
                 }
+                catch (ModuleError)
+                {
+                    echo cli_format_error('ModuleError');
+                    usleep(250000);
+                    goto back;
+                }
+                catch (Throwable)
+                {
+                    echo cli_format_error('Throwable');
+                    usleep(250000);
+                    goto back;
+                }
 
                 try{
                     requester_single(
