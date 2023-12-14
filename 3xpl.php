@@ -431,13 +431,8 @@ elseif ($chosen_option === 'M')
                 {
                     $module->process_block($i);
                 }
-                catch (Exception $e)
+                catch (RequesterException)
                 {
-                    // echo "异常消息: " . $e->getMessage() . PHP_EOL;
-                    // echo "异常代码: " . $e->getCode() . PHP_EOL;
-                    // echo "异常文件: " . $e->getFile() . PHP_EOL;
-                    // echo "异常行号: " . $e->getLine() . PHP_EOL;
-                    // echo "异常堆栈跟踪: " . PHP_EOL . $e->getTraceAsString() . PHP_EOL;
                     echo cli_format_error('Requested exception');
                     usleep(250000);
                     goto back;
@@ -454,7 +449,7 @@ elseif ($chosen_option === 'M')
                         ]
                     );
                 }
-                catch (Exception $e)
+                catch (RequesterException)
                 {
                     // echo "异常消息: " . $e->getMessage() . PHP_EOL;
                     // echo "异常代码: " . $e->getCode() . PHP_EOL;
