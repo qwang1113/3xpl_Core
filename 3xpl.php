@@ -431,8 +431,36 @@ elseif ($chosen_option === 'M')
                 {
                     $module->process_block($i);
                 }
-                catch (RequesterException)
+                catch (Exception $e)
                 {
+                    // echo "异常消息: " . $e->getMessage() . PHP_EOL;
+                    // echo "异常代码: " . $e->getCode() . PHP_EOL;
+                    // echo "异常文件: " . $e->getFile() . PHP_EOL;
+                    // echo "异常行号: " . $e->getLine() . PHP_EOL;
+                    // echo "异常堆栈跟踪: " . PHP_EOL . $e->getTraceAsString() . PHP_EOL;
+                    echo cli_format_error('Requested exception');
+                    usleep(250000);
+                    goto back;
+                }
+
+                try{
+                    requester_single(
+                        'http://localhost:7001/webhook/events',
+                        params: [
+                            'blockchain' => $module->blockchain,
+                            'module' => $module->module,
+                            'block' => $i,
+                            'events' => $module->get_return_events(),
+                        ]
+                    );
+                }
+                catch (Exception $e)
+                {
+                    // echo "异常消息: " . $e->getMessage() . PHP_EOL;
+                    // echo "异常代码: " . $e->getCode() . PHP_EOL;
+                    // echo "异常文件: " . $e->getFile() . PHP_EOL;
+                    // echo "异常行号: " . $e->getLine() . PHP_EOL;
+                    // echo "异常堆栈跟踪: " . PHP_EOL . $e->getTraceAsString() . PHP_EOL;
                     echo cli_format_error('Requested exception');
                     usleep(250000);
                     goto back;
